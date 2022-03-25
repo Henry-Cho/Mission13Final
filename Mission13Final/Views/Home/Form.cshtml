@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Bowler Add Form";
+}
+@model Mission13Final.Models.Bowler
+
+<h1>Create a new bowler</h1>
+
+<form method="post" class="form-group">
+    <div asp-validation-summary="All"></div>
+
+    <label asp-for="BowlerFirstName">First Name: </label>
+    <input asp-for="BowlerFirstName" class="form-control" />
+    <br />
+
+    <label asp-for="BowlerMiddleInit">Middle Init: </label>
+    <input asp-for="BowlerMiddleInit" class="form-control" />
+    <br />
+
+    <label asp-for="BowlerLastName">Last Name: </label>
+    <input asp-for="BowlerLastName" class="form-control" />
+    <br />
+
+    <label asp-for="BowlerAddress">Address: </label>
+    <input asp-for="BowlerAddress" class="form-control" />
+    <br />
+
+    <label asp-for="BowlerCity">City: </label>
+    <input asp-for="BowlerCity" class="form-control" />
+    <br />
+
+    <label asp-for="BowlerState">State: </label>
+    <input asp-for="BowlerState" class="form-control" />
+    <br />
+
+    <label asp-for="BowlerZip">Zip: </label>
+    <input asp-for="BowlerZip" class="form-control" />
+    <br />
+
+    <label asp-for="BowlerPhoneNumber">Phone Number: </label>
+    <input asp-for="BowlerPhoneNumber" class="form-control" />
+    <br />
+
+    <label asp-for="TeamID">Team Name: </label>
+    <select asp-for="TeamID" class="form-control">
+        <option value="">Select a Team</option>
+        @foreach (Team t in ViewBag.Teams)
+            {
+        <option value="@t.TeamID">@t.TeamName</option>
+            }
+    </select>
+    <br />
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+    @if (ViewBag.New == false)
+    {
+        <input type="hidden" asp-for="BowlerID"/>
+    }
+</form>
