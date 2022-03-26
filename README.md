@@ -9,5 +9,6 @@ ALTER TABLE Bowler_Scores ADD
 CONSTRAINT Bowler_Scores_FK00 FOREIGN KEY (BowlerID) REFERENCES Bowlers (BowlerID) ON DELETE CASCADE,
 ADD CONSTRAINT Bowler_Scores_FK01 FOREIGN KEY (MatchID, GameNumber) REFERENCES Match_Games (MatchID, GameNumber);
 ```
+Then, delete the current schema of BowlingLeagueExample and rerun the BowlingLeagueStructureMy.SQL and BowlingLeagueDataMy.SQL file in order.
 
-If you do this, your delete function will work fine
+If you do this, your delete function will work fine!
