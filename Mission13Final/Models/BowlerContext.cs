@@ -10,7 +10,6 @@ namespace Mission13Final.Models
         {
         }
 
-        //public DbSet<Bowler> BE { get; set; }
         public DbSet<Bowler> Bowlers { get; set; }
         public DbSet<Team> Teams { get; set; }
     }

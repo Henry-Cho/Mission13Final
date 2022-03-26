@@ -69,3 +69,26 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+#typesM {
+    overflow: hidden;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 80px; /* Position the navbar at the top of the page */
+    left: 0;
+    padding: 8px 12px;
+}
+
+#typesM a {
+    margin-bottom: 8px;
+}
+
+#cart {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart_sum {
+    min-width: 90px;
+    display: flex;
+    align-items: center;
+}

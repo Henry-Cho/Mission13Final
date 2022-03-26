@@ -20,10 +20,16 @@ namespace Mission13Final.Controllers
             bowler = _b;
         }
 
+        // Index
         public IActionResult Index(string teamName)
         {
+            // If a key-value pair of "id" exists
             HttpContext.Session.Remove("id");
+
+            // assign teamName in this ViewBag.TeamName
             ViewBag.TeamName = teamName ?? "Home";
+
+            // get the record of bowlers of a certain team
             var record = bowler.Bowlers
                 .Include(x => x.Team)
                 .Where(x => x.Team.TeamName == teamName || teamName == null)
@@ -31,14 +37,10 @@ namespace Mission13Final.Controllers
             return View(record);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult Form()
         {
+            // assign a list of teams in ViewBag.Teams
             ViewBag.Teams = bowler.Teams.ToList();
             return View();
         }
@@ -46,6 +48,7 @@ namespace Mission13Final.Controllers
         [HttpPost]
         public IActionResult Form(Bowler b)
         {
+            // get the max BowlerID
             int max = 0;
 
             foreach (var s in bowler.Bowlers)
@@ -56,13 +59,16 @@ namespace Mission13Final.Controllers
                 }
             }
 
+            // assign BowlerID which is max + 1 (to get a new BowlerID) 
             b.BowlerID = max + 1;
 
+            // if model is validated
             if (ModelState.IsValid)
             {
                 bowler.Add(b);
                 bowler.SaveChanges();
 
+                // redirect to Index
                 return RedirectToAction("Index", new { teamName = "" });
             }
             else
@@ -71,28 +77,37 @@ namespace Mission13Final.Controllers
             }
         }
 
+        // Edit a bowler (GET)
+
         [HttpGet]
         public IActionResult Edit(int bowlerId)
         {
+            // this indicates that I am editing
             ViewBag.New = false;
 
+            // get a list of teams and assign them in ViewBag.Teams
             ViewBag.Teams = bowler.Teams.ToList();
 
+            // Set a key-value pair of "id" with bowlerID (string type)
             HttpContext.Session.SetString("id", bowlerId.ToString());
 
+            // get a record of a particular bowler
             var record = bowler.Bowlers.Single(x => x.BowlerID == bowlerId);
 
             return View("Form", record);
         }
 
-        // Edit a moive (POST)
+        // Edit a bowler (POST)
         [HttpPost]
         public IActionResult Edit(Bowler b)
         {
+            // get the value pair of "id"
             string id = HttpContext.Session.GetString("id");
 
+            // make it a int type
             int int_id = int.Parse(id);
 
+            // assign it with BowlerID in the passed model
             b.BowlerID = int_id;
 
             // model validation
@@ -105,8 +120,12 @@ namespace Mission13Final.Controllers
                 // show them in the index page
                 return RedirectToAction("Index", new { teamName = "" });
             }
+            // if fails
+
+            // indicates that I am still editing
             ViewBag.New = false;
 
+            // assign a list of teams in ViewBag.Teams
             ViewBag.Teams = bowler.Teams.ToList();
 
             return View("Form", b);
@@ -115,9 +134,11 @@ namespace Mission13Final.Controllers
         // Delete
         public IActionResult Delete(int bowlerId)
         {
-            // find a movie from DB by its id
+            // find a bowler from DB by its id
             var record = bowler.Bowlers.Single(x => x.BowlerID == bowlerId);
+            // remove the record
             bowler.Bowlers.Remove(record);
+            // save changes
             bowler.SaveChanges();
 
             return RedirectToAction("Index", new { teamName = "" });
